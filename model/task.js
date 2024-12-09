@@ -1,17 +1,29 @@
 const mongoose = require('mongoose');
+const story = require('./story');
 const schema = mongoose.Schema;
 ///CREAR EL SCHEMA COMO AGREGAR LOS ELEMENTOS DE LA CONEXION COMO BUSCAR ELEMENTOS DE LA CONEXION
 const taskSchema = new schema({
-  id: {
+  name: {
     type: String,
     required: true
   },
-  start: {
-    type: Date,
-    default: Date.now
+  description: {
+    type: String,
+    required: false
   },
-  status: {
-    type: String
+  story: {
+    type: schema.Types.ObjectId,
+    ref: story,
+    required: true
+  },
+  created: {
+    type: Date,
+    default: Date.now,
+    required: false
+  },
+  dueDate: {
+    type: Date,
+    required: false
   },
   done: {
     type: Boolean,
@@ -19,4 +31,4 @@ const taskSchema = new schema({
   }
 });
 
-module.exports = mongoose.model('tasks', taskSchema);
+module.exports = mongoose.model('Task', taskSchema);
