@@ -6,9 +6,9 @@ const port = process.env.PORT;
 
 const { login } = require('./controller/auth');
 const user = require('./routes/user');
-const project = require('./controller/project');
-const epic = require('./controller/epic');
-const story = require('./controller/story');
+const project = require('./routes/project');
+const epic = require('./routes/epic');
+const story = require('./routes/story');
 const tasksRoutes = require('./routes/taskRouter');
 
 const cors = require('cors');
@@ -25,7 +25,6 @@ mongoose.connect(process.env.MONGOCONEXION, {
 .catch((err) => {
   console.error("Error al conectar con el sevidor MongoDB: ", err);
 })
-
 
 app.use(cors());
 app.use(express.json());

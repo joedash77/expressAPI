@@ -1,5 +1,5 @@
 const User = require('../model/user');
-const {genSaltSync, hashSync, compareSync} = require('bcrpyt');
+const {genSaltSync, hashSync, compareSync} = require('bcrypt');
 
 module.exports.addUser = (req, res) => {
     let body = req.body;

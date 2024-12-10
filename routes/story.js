@@ -1,7 +1,7 @@
 const express = require('express');
 const storyController = require('../controller/story');
 const { checkToken } = require('../controller/auth');
-const { getTasksfromStory } = require('../controller/task');
+const { getTasksFromStory } = require('../controller/task');
 
 const router = express.Router();
 
@@ -11,7 +11,7 @@ router.get('/user/:userID', checkToken, storyController.getAllStories);
 
 router.get('/:id', checkToken, storyController.getStoryById);
 
-router.get('/:id/tasks', checkToken, getTasksfromStory);
+router.get('/:id/tasks', checkToken, getTasksFromStory);
 
 router.delete('/:id', checkToken, storyController.deleteStory);
 

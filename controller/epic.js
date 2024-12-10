@@ -111,7 +111,7 @@ module.exports.getEpicsFromProject = (req, res) => {
     })
       .then((epics) => {
         return res.status(200).json({
-          status: success,
+          status: 'success',
           data: epics
         })
       })

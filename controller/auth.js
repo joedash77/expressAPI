@@ -1,5 +1,6 @@
 const User = require('../model/user');
 const { genSaltSync, hashSync, compareSync} = require('bcrypt');
+require('dotenv').config();
 var jwt = require('jsonwebtoken');
 
 module.exports.checkToken = (req, res, next) => {
@@ -33,7 +34,7 @@ module.exports.login = (req, res) => {
 
                 if(result){
                     user.password = undefined;
-                    const token = jwt.sign({user: user}, "privateKEY", {
+                    const token = jwt.sign({user: user}, 'privateKEY', {
                         expiresIn: '24h'
                     });
                     return res.status(200).json({
