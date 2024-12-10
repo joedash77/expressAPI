@@ -77,7 +77,7 @@ module.exports.getEpicById = (req, res) => {
       })
 }
 
-  module.exports.deleteStory = async (req, res) => {
+  module.exports.deleteEpic = async (req, res) => {
     const id = req.params.id;
 
     const story = await Story.findOne({epic: req.params.id});
