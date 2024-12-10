@@ -12,7 +12,7 @@ router.get('/:id', checkToken, epicController.getEpicById);
 
 router.get('/:id/stories', checkToken, getStoriesFromEpic);
 
-router.delete('/:id', checkToken, epicController.deleteStory);
+router.delete('/:id', checkToken, epicController.deleteEpic);
 
 router.put('/:id', checkToken, epicController.updateEpic);
 
