@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post('/', checkToken, epicController.createEpic);
 
+router.get('/user/:userID', checkToken, epicController.getAllEpics);
 
 router.get('/:id', checkToken, epicController.getEpicById);
 

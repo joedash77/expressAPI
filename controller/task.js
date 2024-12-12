@@ -59,7 +59,7 @@ module.exports.deleteTask = (req, res) => {
         return res.status(404).send('Tarea no encontrada');
       };
       res.status(200).json({
-        status: success,
+        status: 'success',
         message: 'Task ' + id + 'was deleted'
       });
     })
