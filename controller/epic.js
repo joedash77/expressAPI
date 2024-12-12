@@ -47,7 +47,16 @@ module.exports.createEpic = (req, res) => {
 };
 
 module.exports.getAllEpics = (req, res) => {
-    Epic.find()
+  const userID = req.params.userID;
+
+  if(!userID){
+    return res.status(400).json({
+        status: 'fail',
+        message: 'User ID is required'
+    })
+ }
+
+    Epic.find(userID)
       .then((epics) => {
         res.status(200).json({
           status: 'success',

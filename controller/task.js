@@ -24,7 +24,16 @@ module.exports.createTask = (req, res) => {
 }
 
 module.exports.getAllTasks = (req, res) => {
-  Task.find()
+  const userID = req.params.userID;
+
+  if(!userID){
+    return res.status(400).json({
+        status: 'fail',
+        message: 'User ID is required'
+    })
+ }
+
+  Task.find(userID)
     .then((tasks) => {
       res.status(200).json({
         status: 'success',
