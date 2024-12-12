@@ -17,6 +17,12 @@ module.exports.addUser = (req, res) => {
                 message: {body: 'Email is required!'}
             })
         }
+        else if(body.password==null){
+            res.status(400).json({
+                status: 'fail',
+                message: {body: 'Paswword is required!'}
+            })
+        }
         else{
             const user = new User({
                 username: body.username,

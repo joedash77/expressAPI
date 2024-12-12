@@ -3,7 +3,7 @@ const user = require('../controller/user');
 const { checkToken } = require('../controller/auth');
 const router = express.Router();
 
-router.post('/', user.addUser);
+router.post('/addUser', user.addUser);
 
 router.get('/', checkToken, user.getAllUser);
 
