@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const story = require('./story');
+const Story = require('./story');
 const schema = mongoose.Schema;
 ///CREAR EL SCHEMA COMO AGREGAR LOS ELEMENTOS DE LA CONEXION COMO BUSCAR ELEMENTOS DE LA CONEXION
 const taskSchema = new schema({
@@ -13,7 +13,7 @@ const taskSchema = new schema({
   },
   story: {
     type: schema.Types.ObjectId,
-    ref: story,
+    ref: Story,
     required: true
   },
   created: {

@@ -3,10 +3,10 @@ const schema = mongoose.Schema;
 const project = require('./project');
 
 const epic = new schema({
-    project: {
-        type: schema.Types.ObjectId,
+      project: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: project,
-        required: true
+        required: true,
       },
       name: {
         type: String,

@@ -116,35 +116,44 @@ module.exports.deleteProject = async (req, res) => {
     }
 }
 
-module.exports.updateProject = (req,res) => {
-    update = {};
-    body = req.body;
-  
-    if(body.name){
+module.exports.updateProject = async (req, res) => {
+  try {
+    const body = req.body; // Datos enviados en la solicitud
+    const update = {};
+
+    // Verifica y actualiza los campos permitidos
+    if (body.name) {
       update.name = body.name;
     }
-    if(body.description){
+    if (body.description) {
       update.description = body.description;
     }
-  
-    Epic.findAndUpdate(req.params.id, update)
-      .then((newProject) => {
-        if(!newProject){
-        return res.status(400).json({
-            status: 'fail',
-            message: 'Proyecto no encontrada'
-          })
-        }
-        return res.status(200).json({
-          status: 'success',
-          data: newProject
-        })
-      .catch((err) => {
-        return res.status(500).json({
-          status: 'fail',
-          message: "Error al modificar el proyecto",
-          error: err.message
-        })
-      })
-      })
-}
+
+    // Actualiza el proyecto por ID
+    const updatedProject = await Project.findByIdAndUpdate(
+      req.params.id, // ID del proyecto
+      update, // Campos a actualizar
+      { new: true, runValidators: true } // Opciones: devuelve el nuevo documento y aplica validaciones del esquema
+    );
+
+    if (!updatedProject) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'Proyecto no encontrado',
+      });
+    }
+
+    // Respuesta exitosa
+    return res.status(200).json({
+      status: 'success',
+      data: updatedProject,
+    });
+  } catch (err) {
+    // Manejo de errores
+    return res.status(500).json({
+      status: 'fail',
+      message: 'Error al modificar el proyecto',
+      error: err.message,
+    });
+  }
+};

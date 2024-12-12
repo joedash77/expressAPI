@@ -71,7 +71,7 @@ module.exports.getTasksFromStory = (req, res) => {
   })
     .then((tasks) => {
       return res.status(200).json({
-        status: success,
+        status: 'success',
         data: tasks
       })
     })

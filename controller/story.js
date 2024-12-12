@@ -121,47 +121,47 @@ module.exports.getAllStories = (req, res) => {
     })
       .then((stories) => {
         return res.status(200).json({
-          status: success,
+          status: 'success', // Se debe poner 'success' como string
           data: stories
-        })
+        });
       })
       .catch((err) => {
         return res.status(400).json({
           status: 'fail',
-          data:err
-        })
-      })
+          data: err
+        });
+      });
   }
 
-  module.exports.updateStory = (req,res) => {
-    update = {};
-    body = req.body;
+  module.exports.updateStory = (req, res) => {
+    let update = {};
+    const body = req.body;
   
-    if(body.name){
+    if (body.name) {
       update.name = body.name;
     }
-    if(body.description){
+    if (body.description) {
       update.description = body.description;
     }
   
-    Story.findAndUpdate(req.params.id, update)
+    Story.findByIdAndUpdate(req.params.id, update, { new: true })
       .then((newStory) => {
-        if(!newStory){
-        return res.status(400).json({
+        if (!newStory) {
+          return res.status(400).json({
             status: 'fail',
             message: 'Historia no encontrada'
-          })
+          });
         }
         return res.status(200).json({
           status: 'success',
           data: newStory
-        })
+        });
+      })
       .catch((err) => {
         return res.status(500).json({
           status: 'fail',
-          message: "Error al modificar la historia",
+          message: 'Error al modificar la historia',
           error: err.message
-        })
-      })
-      })
-  }
+        });
+      });
+  };  

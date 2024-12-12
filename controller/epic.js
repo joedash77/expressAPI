@@ -2,48 +2,49 @@ const Epic = require('../model/epic');
 const Story = require('../model/story');
 
 module.exports.createEpic = (req, res) => {
-    let body = req.body;
+  let body = req.body;
 
-    if(body == undefined){
-        return res.status(400).json({
-            status: 'fail',
-            message: 'body is missing'
-        })
-    }
-    else if(body.name==undefined){
-        return res.status(400).json({
-            status: 'fail',
-            message: 'name is missing'
-        })
-    }
-    else if(body.project==undefined){
-        return res.status(400).json({
-            status: 'fail',
-            message: 'No Project Id found'
-        })
-    }
+  // Validaciones del body
+  if (body == undefined) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'body is missing',
+    });
+  } else if (body.name == undefined) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'name is missing',
+    });
+  } else if (body.project == undefined) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'No Project Id found',
+    });
+  }
 
-    const epic = new Epic({
-        name: body.name,
-        description: body.description,
-        epic: body.project,
-        icon: body.icon
-    })
+  // Crear la épica
+  const epic = new Epic({
+    name: body.name,
+    description: body.description,
+    project: body.project, // Cambiado 'epic' a 'project'
+    icon: body.icon,
+  });
 
-    epic.save()
+  // Guardar la épica
+  epic.save()
     .then((data) => {
-        res.status(200).json({
-            status: 'success',
-            data: data
-        });
+      res.status(200).json({
+        status: 'success',
+        data: data,
+      });
     })
     .catch((err) => {
-        res.status(400).json({
-            status: 'fail',
-            message: err
-        })
-    })
-}
+      res.status(400).json({
+        status: 'fail',
+        message: err.message, // Mejor devolver solo el mensaje del error
+      });
+    });
+};
 
 module.exports.getAllEpics = (req, res) => {
     Epic.find()
@@ -134,24 +135,24 @@ module.exports.updateEpic = (req,res) => {
       update.description = body.description;
     }
   
-    Epic.findAndUpdate(req.params.id, update)
-      .then((newEpic) => {
-        if(!newEpic){
+    Epic.findByIdAndUpdate(req.params.id, update)
+    .then((newEpic) => {
+      if (!newEpic) {
         return res.status(400).json({
-            status: 'fail',
-            message: 'Epica no encontrada'
-          })
-        }
-        return res.status(200).json({
-          status: 'success',
-          data: newEpic
-        })
-      .catch((err) => {
-        return res.status(500).json({
           status: 'fail',
-          message: "Error al modificar la epica",
-          error: err.message
-        })
-      })
-      })
+          message: 'Épica no encontrada',
+        });
+      }
+      return res.status(200).json({
+        status: 'success',
+        data: newEpic,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        status: 'fail',
+        message: 'Error al modificar la épica',
+        error: err.message,
+      });
+    });
 }
