@@ -59,7 +59,7 @@ module.exports.deleteTask = (req, res) => {
         return res.status(404).send('Tarea no encontrada');
       };
       res.status(200).json({
-        status: success,
+        status: 'success',
         message: 'Task ' + id + 'was deleted'
       });
     })
@@ -96,28 +96,26 @@ module.exports.updateTask = (req,res) => {
   if(body.dueDate){
     update.dueDate = body.dueDate;
   }
-  if(body.done){
-    update.done = body.done;
+  if (typeof body.done !== 'undefined') { 
+    update.done = body.done; 
   }
 
-  Task.findAndUpdate(req.params.id, update)
-    .then((newTask) => {
-      if(!newTask){
-      return res.status(400).json({
-          status: 'fail',
-          message: 'Tarea no encontrada'
-        })
-      }
-      return res.status(200).json({
-        status: 'success',
-        data: newTask
-      })
-    .catch((err) => {
-      return res.status(500).json({
-        status: 'fail',
-        message: "Error al modificar la tarea",
-        error: err.message
-      })
-    })
-    })
+Task.findByIdAndUpdate(req.params.id, update) 
+.then((newTask) => { 
+  if (!newTask) 
+    { return res.status(404).json({
+       status: 'fail', 
+       message: 'Tarea no encontrada' 
+      }); 
+    } return res.status(200).json({
+       status: 'success', 
+       data: newTask }); 
+      }) 
+      .catch((err) => {
+         return res.status(500).json({
+           status: 'fail', 
+           message: 'Error al modificar la tarea', 
+           error: err.message 
+          });
+      });
 }

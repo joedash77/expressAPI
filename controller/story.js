@@ -55,7 +55,7 @@ module.exports.createStory = (req, res) => {
 
 module.exports.getAllStories = (req, res) => {
     Story.find({
-        owner: req.params.userId
+        owner: req.params.userID
     })
       .then((stories) => {
         res.status(200).json({
